@@ -8,7 +8,7 @@ npm install --save-dev gulp-liquidjs
 ```
 
 ## Usage
-```
+```javascript
 const gulp = require('gulp')
 const liquid = require('gulp-liquidjs')
 
@@ -25,7 +25,7 @@ All options are optional.
 ### `engine`
 Engine options.
 
-```
+```javascript
 .pipe(liquid({
 	engine: {
 		root: ['./src/liquid/templates', './src/liquid/snippets'],
@@ -68,7 +68,7 @@ Otherwise, undefined variables will cause an exception. Defaults to `false`.
 ### `ext`
 Extension name of destination filename. Defaults to `.html`.
 
-```
+```javascript
 .pipe(liquid({
 	ext: '.html'
 }))
@@ -77,7 +77,7 @@ Extension name of destination filename. Defaults to `.html`.
 ### `filters`
 Array of filter object to register custom filters: `{<filter_name>: <filter_function>}`.
 
-```
+```javascript
 .pipe(liquid({
 	filters: [
 		// Usage: {{ name | upper }}
@@ -113,7 +113,7 @@ Array of tag object to register custom tags: `{<tag_name> : {parse: <parse_funct
 ### `plugins`
 A pack of tags or filters can be encapsulated into a plugin, which will be typically installed via npm.
 
-```
+```javascript
 const somePlugin = require('./some-plugin')
 
 gulp.task('liquid', () => {
