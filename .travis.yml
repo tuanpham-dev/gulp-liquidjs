@@ -2,4 +2,12 @@ language: node_js
 node_js:
   - "10"
   - "8"
-  - "6"
+jobs:
+  include:
+    - stage: npm release
+      if: tag IS present
+    deploy:
+      provider: npm
+      email: "$NPM_EMAIL"
+      api_key: "$NPM_TOKEN"
+      skip_cleanup: true
