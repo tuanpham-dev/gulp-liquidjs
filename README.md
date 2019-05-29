@@ -13,9 +13,9 @@ const gulp = require('gulp')
 const liquid = require('gulp-liquidjs')
 
 gulp.task('liquid', () => {
-	return gulp.src('./src/*.liquid')
-		.pipe(liquid())
-		.pipe(gulp.dest('./dist'))
+    return gulp.src('./src/*.liquid')
+        .pipe(liquid())
+        .pipe(gulp.dest('./dist'))
 })
 ```
 
@@ -27,10 +27,10 @@ Engine options.
 
 ```javascript
 .pipe(liquid({
-	engine: {
-		root: ['./src/liquid/templates', './src/liquid/snippets'],
-		extname: '.liquid'
-	}
+    engine: {
+        root: ['./src/liquid/templates', './src/liquid/snippets'],
+        extname: '.liquid'
+    }
 }))
 ```
 
@@ -70,7 +70,7 @@ Extension name of destination filename. Defaults to `.html`.
 
 ```javascript
 .pipe(liquid({
-	ext: '.html'
+    ext: '.html'
 }))
 ```
 
@@ -79,12 +79,12 @@ Array of filter object to register custom filters: `{<filter_name>: <filter_func
 
 ```javascript
 .pipe(liquid({
-	filters: [
-		// Usage: {{ name | upper }}
-		{upper: v => v.toUpperCase()},
-		// Usage: {{ 1 | add: 2, 3 }}
-		{add: (initial, arg1, arg2) => initial + arg1 + arg2}
-	]
+    filters: [
+        // Usage: {{ name | upper }}
+        {upper: v => v.toUpperCase()},
+        // Usage: {{ 1 | add: 2, 3 }}
+        {add: (initial, arg1, arg2) => initial + arg1 + arg2}
+    ]
 }))
 ```
 
@@ -93,20 +93,20 @@ See existing filter implementations here: <https://github.com/harttle/liquidjs/t
 ### `tags`
 Array of tag object to register custom tags: `{<tag_name> : {parse: <parse_function>, render: <render_function>}}`
 
-```
+```javascript
 .pipe(liquid({
-	tags: [
-		// Usage: {% upper name %}
-		{upper: {
-			parse: (tagToken, remainTokens) => {
-				this.str = tagToken.args // name
-			},
-			render: async (scope, hash) {
-				var str = await liquid.evalValue(this.str, scope) // 'alice'
-				return str.toUpperCase() // 'ALICE
-			}
-		}}
-	]
+    tags: [
+        // Usage: {% upper name %}
+        {upper: {
+            parse: (tagToken, remainTokens) => {
+                this.str = tagToken.args // name
+            },
+            render: async (scope, hash) {
+                var str = await liquid.evalValue(this.str, scope) // 'alice'
+                return str.toUpperCase() // 'ALICE
+            }
+        }}
+    ]
 }))
 ```
 
@@ -117,17 +117,17 @@ A pack of tags or filters can be encapsulated into a plugin, which will be typic
 const somePlugin = require('./some-plugin')
 
 gulp.task('liquid', () => {
-	return gulp.src('./src/*.liquid')
-		.pipe(liquid({
-			plugins: [somePlugin]
-		}))
-		.pipe(gulp.dest('./dist'))
+    return gulp.src('./src/*.liquid')
+        .pipe(liquid({
+            plugins: [somePlugin]
+        }))
+        .pipe(gulp.dest('./dist'))
 })
 
 // some-plugin.js
 module.exports = (Liquid) => {
-	// here `this` refers to the engine instance
-	// `Liquid` provides facilities to implement tags and filters
-	this.registerFilter('foo', x => x);
+    // here `this` refers to the engine instance
+    // `Liquid` provides facilities to implement tags and filters
+    this.registerFilter('foo', x => x);
 }
 ```
