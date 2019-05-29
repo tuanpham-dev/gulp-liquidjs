@@ -2,6 +2,7 @@ const through = require('through2')
 const PluginError = require('plugin-error')
 const Liquid = require('liquidjs')
 const replaceExtension = require('replace-ext')
+const objectAssignDeep = require('object-assign-deep')
 
 const PLUGIN_NAME = 'gulp-liquidjs'
 
@@ -17,8 +18,8 @@ module.exports = (opts) => {
 		data: {}
 	}
 
-	opts = Object.assign(defaults, opts)
-	const engine = new Liquid(opts)
+	opts = objectAssignDeep(defaults, opts)
+	const engine = new Liquid(opts.engine)
 
 	if (opts.filters.length) {
 		for (filter in opts.filters) {
