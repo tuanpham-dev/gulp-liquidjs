@@ -1,5 +1,5 @@
 # gulp-liquidjs
-A shopify compatible Liquid template engine for Gulp using [liquidjs][harttle/liquidjs].
+A shopify compatible Liquid template engine for Gulp using [liquidjs](https://github.com/harttle/liquidjs).
 
 ## Installation
 
