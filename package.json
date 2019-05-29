@@ -1,0 +1,26 @@
+{
+  "name": "gulp-liquidjs",
+  "version": "0.0.1",
+  "description": "Liquid plugin for gulp",
+  "license": "MIT",
+  "repository": "https://github.com/tuanpham-dev/gulp-liquidjs",
+  "author": {
+    "name": "Tuan Pham",
+    "email": "tuanpham.developer@gmail.com"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulp liquid liquidjs"
+  ],
+  "dependencies": {
+    "liquidjs": "^8.2.3",
+    "plugin-error": "^1.0.1",
+    "replace-ext": "^1.0.0",
+    "through2": "^3.0.1"
+  }
+}
