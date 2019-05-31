@@ -1,12 +1,16 @@
 {
   "name": "@tuanpham-dev/gulp-liquidjs",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "Liquid plugin for gulp",
   "license": "MIT",
   "repository": "https://github.com/tuanpham-dev/gulp-liquidjs",
   "author": {
     "name": "Tuan Pham",
     "email": "tuanpham.developer@gmail.com"
+  },
+  "scripts": {
+    "lint": "eslint ./index.js",
+    "test": "mocha"
   },
   "engines": {
     "node": ">=4"
@@ -23,5 +27,16 @@
     "plugin-error": "^1.0.1",
     "replace-ext": "^1.0.0",
     "through2": "^3.0.1"
+  },
+  "devDependencies": {
+    "assert": "^2.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0",
+    "mocha": "^6.1.4",
+    "vinyl": "^2.2.0"
   }
 }

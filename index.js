@@ -9,59 +9,57 @@ const PLUGIN_NAME = 'gulp-liquidjs'
 module.exports = (opts) => {
 	const defaults = {
 		engine: {
-			extname: '.liquid'
+			extname: '.liquid',
 		},
 		ext: '.html',
-		filters: [],
-		tags: [],
+		filters: {},
+		tags: {},
 		plugins: [],
-		data: {}
+		data: {},
 	}
 
-	opts = objectAssignDeep(defaults, opts)
-	const engine = new Liquid(opts.engine)
+	const options = objectAssignDeep(defaults, opts)
+	const engine = new Liquid(options.engine)
 
-	if (opts.filters.length) {
-		for (filter in opts.filters) {
-			if (opts.filters.hasOwnProperty(filter)) {
-				engine.registerFilter(filter, opts.filters[filter])
-			}
+	for (const filter in options.filters) {
+		if (Object.prototype.hasOwnProperty.call(options.filters, filter)) {
+			engine.registerFilter(filter, options.filters[filter])
 		}
 	}
 
-	if (opts.tags.length) {
-		for (tag in opts.tags) {
-			if (opts.tags.hasOwnProperty(tag)) {
-				engine.registerTag(tag, opts.tags[tag])
-			}
+	for (const tag in options.tags) {
+		if (Object.prototype.hasOwnProperty.call(options.tags, tag)) {
+			engine.registerTag(tag, options.tags[tag])
 		}
 	}
 
-	if (opts.plugins.length) {
-		for (plugin of opts.plugins) {
+	if (options.plugins.length) {
+		for (const plugin of options.plugins) {
 			engine.plugin(plugin)
 		}
 	}
 
 	return through.obj((file, encoding, callback) => {
-		if (file.isNull()) {
-			return callback(null, file)
+		const f = file
+
+		if (f.isNull()) {
+			return callback(null, f)
 		}
 
-		if (file.isStream()) {
+		if (f.isStream()) {
 			return callback(new PluginError(PLUGIN_NAME, 'Streaming is not supported'))
 		}
 
-		if (file.isBuffer()) {
-			file.path = replaceExtension(file.path, opts.ext)
+		if (f.isBuffer()) {
+			f.path = replaceExtension(f.path, options.ext)
 
-			engine.parseAndRender(file.contents.toString(), opts.data)
+			engine.parseAndRender(f.contents.toString(), options.data)
 				.then((output) => {
-					file.contents = Buffer.from(output);
-					callback(null, file);
-				}, (err) => {
-					new PluginError(PLUGIN_NAME, 'Error during compiling')
-				})
+					f.contents = Buffer.from(output)
+					return callback(null, f)
+				}, err => callback(new PluginError(PLUGIN_NAME, err)))
 		}
+
+		return null
 	})
 }
