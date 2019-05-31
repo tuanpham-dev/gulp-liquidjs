@@ -9,36 +9,36 @@ const PLUGIN_NAME = 'gulp-liquidjs'
 module.exports = (opts) => {
 	const defaults = {
 		engine: {
-			extname: '.liquid'
+			extname: '.liquid',
 		},
 		ext: '.html',
 		filters: [],
 		tags: [],
 		plugins: [],
-		data: {}
+		data: {},
 	}
 
-	opts = objectAssignDeep(defaults, opts)
-	const engine = new Liquid(opts.engine)
+	const options = objectAssignDeep(defaults, opts)
+	const engine = new Liquid(options.engine)
 
-	if (opts.filters.length) {
-		for (filter in opts.filters) {
-			if (opts.filters.hasOwnProperty(filter)) {
-				engine.registerFilter(filter, opts.filters[filter])
+	if (options.filters.length) {
+		for (const filter in options.filters) {
+			if (Object.prototype.hasOwnProperty.call(options.filters, filter)) {
+				engine.registerFilter(filter, options.filters[filter])
 			}
 		}
 	}
 
-	if (opts.tags.length) {
-		for (tag in opts.tags) {
-			if (opts.tags.hasOwnProperty(tag)) {
-				engine.registerTag(tag, opts.tags[tag])
+	if (options.tags.length) {
+		for (const tag in options.tags) {
+			if (Object.prototype.hasOwnProperty.call(options.tags, tag)) {
+				engine.registerTag(tag, options.tags[tag])
 			}
 		}
 	}
 
-	if (opts.plugins.length) {
-		for (plugin of opts.plugins) {
+	if (options.plugins.length) {
+		for (const plugin of options.plugins) {
 			engine.plugin(plugin)
 		}
 	}
@@ -53,15 +53,17 @@ module.exports = (opts) => {
 		}
 
 		if (file.isBuffer()) {
-			file.path = replaceExtension(file.path, opts.ext)
+			const f = file
 
-			engine.parseAndRender(file.contents.toString(), opts.data)
+			f.path = replaceExtension(f.path, options.ext)
+
+			engine.parseAndRender(f.contents.toString(), options.data)
 				.then((output) => {
-					file.contents = Buffer.from(output);
-					callback(null, file);
-				}, (err) => {
-					new PluginError(PLUGIN_NAME, 'Error during compiling')
-				})
+					f.contents = Buffer.from(output)
+					callback(null, f)
+				}, err => callback(new PluginError(PLUGIN_NAME, err)))
 		}
+
+		return callback(null, file)
 	})
 }
