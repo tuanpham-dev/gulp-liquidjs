@@ -1,6 +1,6 @@
 {
   "name": "@tuanpham-dev/gulp-liquidjs",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Liquid plugin for gulp",
   "license": "MIT",
   "repository": "https://github.com/tuanpham-dev/gulp-liquidjs",
