@@ -15,7 +15,7 @@ module.exports = (opts) => {
 		filters: {},
 		tags: {},
 		plugins: [],
-		data: {},
+		data: {}
 	}
 
 	const options = objectAssignDeep(defaults, opts)
