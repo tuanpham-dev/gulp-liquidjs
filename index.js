@@ -15,7 +15,7 @@ module.exports = (opts) => {
 		filters: {},
 		tags: {},
 		plugins: [],
-		data: {}
+		data: {},
 	}
 
 	const options = objectAssignDeep(defaults, opts)
@@ -43,7 +43,7 @@ module.exports = (opts) => {
 		const f = file
 
 		if (f.data) {
-			objectAssignDeep(options.data, f.data);
+			objectAssignDeep(options.data, f.data)
 		}
 
 		if (f.isNull()) {
