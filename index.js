@@ -40,10 +40,10 @@ module.exports = (opts) => {
 	}
 
 	return through.obj((file, encoding, callback) => {
-		const f = file
+		const f = file;
 
 		if (f.data) {
-			objectAssignDeep(options.data, f.data)
+			options.data = f.data;
 		}
 
 		if (f.isNull()) {
