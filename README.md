@@ -19,6 +19,15 @@ gulp.task('liquid', () => {
 })
 ```
 
+with `gulp-data`
+```javascript
+gulp
+  .pipe(data(function(file) {
+    // build your data for liquid
+  })
+  .pipe(liquid())
+```
+
 ## Options
 All options are optional.
 
@@ -79,12 +88,12 @@ Array of filter object to register custom filters: `{<filter_name>: <filter_func
 
 ```javascript
 .pipe(liquid({
-    filters: [
+    filters: {
         // Usage: {{ name | upper }}
-        {upper: v => v.toUpperCase()},
+        upper: v => v.toUpperCase(),
         // Usage: {{ 1 | add: 2, 3 }}
-        {add: (initial, arg1, arg2) => initial + arg1 + arg2}
-    ]
+        add: (initial, arg1, arg2) => initial + arg1 + arg2
+    }
 }))
 ```
 
@@ -95,9 +104,9 @@ Array of tag object to register custom tags: `{<tag_name> : {parse: <parse_funct
 
 ```javascript
 .pipe(liquid({
-    tags: [
+    tags: {
         // Usage: {% upper name %}
-        {upper: {
+      	upper: {
             parse: (tagToken, remainTokens) => {
                 this.str = tagToken.args // name
             },
@@ -105,8 +114,8 @@ Array of tag object to register custom tags: `{<tag_name> : {parse: <parse_funct
                 var str = await liquid.evalValue(this.str, scope) // 'alice'
                 return str.toUpperCase() // 'ALICE
             }
-        }}
-    ]
+        }
+    }
 }))
 ```
 
