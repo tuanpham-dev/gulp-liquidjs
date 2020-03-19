@@ -42,6 +42,10 @@ module.exports = (opts) => {
 	return through.obj((file, encoding, callback) => {
 		const f = file
 
+		if (f.data) {
+			options.data = f.data
+		}
+
 		if (f.isNull()) {
 			return callback(null, f)
 		}
