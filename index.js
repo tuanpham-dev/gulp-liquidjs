@@ -43,7 +43,7 @@ module.exports = (opts) => {
     const f = file
 
     if (f.data) {
-      options.data = f.data
+      options.data = objectAssignDeep(options.data, f.data)
     }
 
     if (f.isNull()) {
